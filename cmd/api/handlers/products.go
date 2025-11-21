@@ -34,12 +34,14 @@ func NewProducts(l *log.Logger) *Products {
 //	@Router			/products/ [get]
 func (p *Products) GetProducts(c *gin.Context) {
 	pl := data.NewProductsList()
-	err := pl.ToJson(c.Writer)
+	// err := pl.ToJson(c.Writer)
 
-	if err != nil {
-		http.Error(c.Writer, "Unable to marshal json", 500)
-		return
-	}
+	c.JSON(200, gin.H{"message": "ok", "products": pl})
+
+	// if err != nil {
+	// 	http.Error(c.Writer, "Unable to marshal json", 500)
+	// 	return
+	// }
 }
 
 // AddProduct godoc
@@ -101,7 +103,7 @@ func (p *Products) GetProductMiddleware() gin.HandlerFunc {
 		product := &data.Product{}
 
 		// if err := product.FromJson(c.Request.Body); err != nil {
-		if err := c.ShouldBind(product); err != nil {
+		if err := c.ShouldBindJSON(product); err != nil {
 			p.l.Println("Cannot unmarshall body, ", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": fmt.Sprintf("Cannot unmarshall: %s", err)})
 			return
