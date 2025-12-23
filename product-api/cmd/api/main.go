@@ -14,8 +14,8 @@ import (
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
+	_ "github.com/critma/prodapi/api-docs"
 	"github.com/critma/prodapi/cmd/api/handlers"
-	_ "github.com/critma/prodapi/cmd/docs"
 )
 
 //	@title			Swagger product API
